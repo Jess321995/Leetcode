@@ -10,10 +10,12 @@ class Solution:
             return -1
         
         hashString, hashPattern = 0, 0 
+        j = lenNeedle - 1
         for i in range(lenNeedle):
             # calculate the needle hash and initial haystack hash
-            hashString += ord(haystack[i])
-            hashPattern += ord(needle[i])
+            hashString += ord(haystack[i]) * 10 ** j
+            hashPattern += ord(needle[i]) * 10 ** j
+            j -= 1
             
         start, end = 0, lenNeedle 
         for index in range(lenHaystack - lenNeedle + 1): 
@@ -21,10 +23,11 @@ class Solution:
                 # if hash matches, compare the values 
                 if haystack[start:end] == needle: 
                     return index 
-                
+            
+            j = lenNeedle - 1
             if end <= lenHaystack-1: 
-                hashString -= ord(haystack[start]) 
-                hashString += ord(haystack[end])
+                hashString -= ord(haystack[start]) * 10 ** j
+                hashString = (hashString * 10) + ord(haystack[end])
                 start += 1
                 end += 1
 
