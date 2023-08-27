@@ -1,19 +1,14 @@
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
-        # Memoization solution
+        # DP solution
         def subset_problem(n, target_sum):
-            if target_sum == 0:
-                return True
-            if n == 0:
-                return False
-            if cache[n][target_sum] != -1:
-                return cache[n][target_sum]
-            if nums[n - 1] <= target_sum:
-                cache[n][target_sum] = \
-                (subset_problem(n - 1, target_sum - nums[n- 1]) or
-                 subset_problem(n - 1, target_sum))
-            else:
-                cache[n][target_sum] = subset_problem(n - 1, target_sum)
+            for i in range(1, n + 1):
+                for j in range(1, target_sum + 1):
+                    if nums[i - 1] <= j:
+                        cache[i][j] = \
+                            (cache[i-1][j - nums[i-1]] or cache[i-1][j])
+                    else:
+                        cache[i][j] = cache[i-1][j]
             
             return cache[n][target_sum]
         
@@ -21,7 +16,10 @@ class Solution:
         sum = 0
         for val in nums:
             sum += val
-        cache = [[-1 for _ in range(sum + 1)] for _ in range(n + 1)]
+        cache = [[False for _ in range(sum + 1)] for _ in range(n + 1)]
+        for i in range(n + 1):
+            cache[i][0] = True
+
         if sum % 2 != 0:
             return False
         else:
