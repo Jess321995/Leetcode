@@ -1,6 +1,6 @@
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
-        # Recursive
+        # Memoization
         @cache
         def countSubset(n, sum):
             if(n == 0 and sum > 0):
