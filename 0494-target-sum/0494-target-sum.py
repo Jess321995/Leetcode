@@ -1,25 +1,27 @@
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
-        # Memoization
-        @cache
-        def countSubset(n, sum):
-            if(n == 0 and sum > 0):
-                return 0
-            if(sum==0 and n==0):
-                return 1
-        
-            if(n>0 and sum>=0):
-                if nums[n - 1] <= sum:
-                    return (countSubset(n - 1,  sum - nums[n - 1]) + \
-                            countSubset(n - 1,  sum))
-                else:
-                    return countSubset(n - 1,  sum)
-        
-        sum = 0
-        for n in nums:
-            sum += n
 
-        if (sum - target) % 2 != 0 or sum < target:
+        total_sum = sum(nums)
+
+        # Check if it's possible to achieve the target sum based on the total sum
+        if (total_sum - target) % 2 != 0 or total_sum < target:
             return 0
-        val = (sum - target) // 2
-        return countSubset(len(nums), val)
+
+        subset_sum = (total_sum - target) // 2
+
+        # Create a DP matrix with dimensions (len(nums) + 1) x (subset_sum + 1)
+        dp = [[0] * (subset_sum + 1) for _ in range(len(nums) + 1)]
+
+        # There's one way to achieve a sum of 0 (by not selecting any number)
+        dp[0][0] = 1
+
+        # Fill in the DP matrix
+        for i in range(1, len(nums) + 1):
+            for j in range(subset_sum + 1):
+                dp[i][j] = dp[i - 1][j]  # Exclude the current number
+                if j >= nums[i - 1]:
+                    dp[i][j] += dp[i - 1][j - nums[i - 1]]  # Include the current number
+
+        return dp[len(nums)][subset_sum]
+        
+
