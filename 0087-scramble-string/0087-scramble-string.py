@@ -5,11 +5,9 @@ class Solution:
             return False
         if s1 == s2:
             return True
-        if len(s1) <= 1:
+        if len(s1) < 1:
             return False
-        if len(s2) <= 1:
-            return False
-        
+ 
         n = len(s1)
         for i in range(1, n):
             # Swap
