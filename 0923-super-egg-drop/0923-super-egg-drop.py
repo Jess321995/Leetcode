@@ -13,7 +13,7 @@ class Solution:
             if cache[k][n] != -1:
                 return cache[k][n]
 
-            minAttempts = float('inf')
+            minAttempts = n + 1
             low = 1
             high = n
             while low <= high:
