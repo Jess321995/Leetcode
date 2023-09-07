@@ -1,39 +1,45 @@
 class Solution:
     
     def superEggDrop(self, k: int, n: int) -> int:
-        #Matrix chain multiplication
-        t=[[-1 for i in range(n+1)] for j in range(k+1)]
+        cache = [[-1 for _ in range(n + 1)] for _ in range(k + 1)]
         
-        def solve(k,n):
-            if n==0 or n==1:
+        def helper(k, n):
+            if n == 0 or n == 1:
                 return n
-            if k==1:
+        
+            if k == 1:
                 return n
-            if t[k][n]!=-1:
-                return t[k][n]
-            mn=float('inf')
-            l=1
-            h=n
-            while l<=h:
-                mid=(l+h)//2
-                if t[k-1][mid-1]!=-1:
-                    left=t[k-1][mid-1]
-                else:
-                    left=solve(k-1,mid-1)
-                    t[k-1][mid-1]=left
-                
-                if t[k][n-mid]!=-1:
-                    right=t[k][n-mid]
-                else:
-                    right=solve(k,n-mid)
-                    t[k][n-mid]=right
-                temp=1+max(left,right)
-                if left<right:
-                    l=mid+1
-                else:
-                    h=mid-1
-                mn=min(temp,mn)
-            t[k][n]=mn
-            return mn
 
-        return solve(k,n)
+            if cache[k][n] != -1:
+                return cache[k][n]
+
+            minAttempts = float('inf')
+            low = 1
+            high = n
+            while low <= high:
+                middle = (low + high) // 2
+                # Made an attempt hence 1
+                # Outcome could be either break or no break
+                # and we take max of that since we need worst case
+                if cache[k - 1][middle - 1] != -1:
+                    left = cache[k - 1][middle - 1]
+                else:
+                    left = helper(k - 1, middle - 1)
+                    cache[k - 1][middle - 1] = left
+                
+                if cache[k][n - middle] != -1:
+                    right = cache[k][n - middle]
+                else:
+                    right = helper(k, n - middle)
+                    cache[k][n - middle] = right
+
+                temp = 1 + max(left, right)
+                minAttempts = min(minAttempts, temp)
+                if left < right:
+                    low = middle + 1
+                else:
+                    high = middle - 1
+            cache[k][n] = minAttempts
+            return minAttempts
+
+        return helper(k, n)
