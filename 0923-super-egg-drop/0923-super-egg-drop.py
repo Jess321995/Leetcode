@@ -21,18 +21,8 @@ class Solution:
                 # Made an attempt hence 1
                 # Outcome could be either break or no break
                 # and we take max of that since we need worst case
-                if cache[k - 1][middle - 1] != -1:
-                    left = cache[k - 1][middle - 1]
-                else:
-                    left = helper(k - 1, middle - 1)
-                    cache[k - 1][middle - 1] = left
-                
-                if cache[k][n - middle] != -1:
-                    right = cache[k][n - middle]
-                else:
-                    right = helper(k, n - middle)
-                    cache[k][n - middle] = right
-
+                left = helper(k - 1, middle - 1)
+                right = helper(k, n - middle)
                 temp = 1 + max(left, right)
                 minAttempts = min(minAttempts, temp)
                 if left < right:
