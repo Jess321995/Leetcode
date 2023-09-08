@@ -9,13 +9,15 @@ class Solution:
         res = 0
         def helper(root):
             if root == None:
+                return -1
+            elif root.left == None and root.right == None:
                 return 0
             nonlocal res
             left = helper(root.left)
             right = helper(root.right)
             temp = max(left, right) + 1
-            res = max(1 + left + right, res)
+            res = max(2 + left + right, res)
             return temp
             
         helper(root)
-        return res - 1
+        return res
