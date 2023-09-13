@@ -2,16 +2,12 @@ class Solution:
     def combinationSum3(self, k: int, n: int) -> List[List[int]]:
         output = []
         def helper(n, target, res):
-            print(res)
             # Found the answer
             if target == 0 and len(res) == k:
                 output.append(res.copy())
                 return
-            if target <= 0:
-                return
-            if len(res) > k:
-                return
-            if n == 0:
+
+            if target <= 0 or len(res) > k or n == 0:
                 return
 
             # Choose it
