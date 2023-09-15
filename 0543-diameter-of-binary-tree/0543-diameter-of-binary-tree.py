@@ -6,6 +6,9 @@
 #         self.right = right
 class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        # Recursive
+        # O(n) time
+        # O(n) recursive stack space
         diameter = 0
         def dfs(node):
             nonlocal diameter
