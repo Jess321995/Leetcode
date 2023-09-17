@@ -6,17 +6,16 @@
 #         self.right = right
 class Solution:
     def goodNodes(self, root: TreeNode) -> int:
-        # Iterative DFS
-        good = 0
-        if root:
-            stack = [(root, root.val)]
-        while stack:
-            node, maxVal = stack.pop()
-            if node.val >= maxVal:
-                good += 1
+        # Recursive DFS
+        # We are maintaining the max value we have seen so far from the root
 
-            if node.right:
-                stack.append((node.right, max(node.val, maxVal)))
-            if node.left:
-                stack.append((node.left, max(node.val, maxVal)))
-        return good
+        def dfs(node, maxVal):
+            if not node:
+                return 0
+            res = 0
+            if node.val >= maxVal:
+                res += 1
+            res += dfs(node.left, max(maxVal, node.val))
+            res += dfs(node.right, max(maxVal, node.val))
+            return res
+        return dfs(root, root.val)
