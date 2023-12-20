@@ -3,16 +3,16 @@ class Solution:
         res = []
 
         for i in range(len(intervals)):
-            # Is it before the current interval?
-            if intervals[i][0] > newInterval[1]: 
+            if newInterval[1] < intervals[i][0]:
                 res.append(newInterval)
-                return res + intervals[i:]
-            # Is it after the current interval?
-            elif intervals[i][1] < newInterval[0]:
+                res.extend(intervals[i:])
+                return res
+            elif newInterval[0] > intervals[i][1]:
                 res.append(intervals[i])
-            # It overlaps so update the newInterval
             else:
-                newInterval = [min(newInterval[0], intervals[i][0]),
-                               max(newInterval[1], intervals[i][1])]
+                newInterval = [
+                    min(newInterval[0], intervals[i][0]),
+                    max(newInterval[1], intervals[i][1]),
+                ]
         res.append(newInterval)
-        return res
+        return res        
