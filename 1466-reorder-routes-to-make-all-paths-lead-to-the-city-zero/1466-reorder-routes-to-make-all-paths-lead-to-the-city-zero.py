@@ -2,6 +2,7 @@ class Solution:
     def minReorder(self, n: int, connections: List[List[int]]) -> int:
         # no loops and a connected graph
         # start at 0, recursively check neighbors, count outgoing edges
+        
         edges = { (a,b) for a,b in connections}
         neighbors = { city:[] for city in range(n)}
         visit = set()
