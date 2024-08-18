@@ -16,11 +16,6 @@ class Solution:
                 n2 -= 1
             p -=1
         
-        while n1 >= 0:
-            nums1[p] = nums1[n1]
-            n1 -= 1
-            p -= 1
-        
         while n2 >= 0:
             nums1[p] = nums2[n2]
             n2 -= 1
