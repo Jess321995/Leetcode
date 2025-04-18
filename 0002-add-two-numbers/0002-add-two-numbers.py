@@ -4,6 +4,9 @@
 #         self.val = val
 #         self.next = next
 class Solution:
+    # Iterative approach
+    # Time complexity O(max(m,n))
+    # Space complexity O(1) and output list is O(max(m, n))
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         head = ptr = ListNode()
         carry = 0
